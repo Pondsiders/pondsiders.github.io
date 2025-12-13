@@ -109,8 +109,7 @@ Lemme try to explain how.
 
 ## The Lottery Ticket Hypothesis
 
-In 2019 Frankle and Carbin from MIT advanced the [Lottery Ticket Hypothesis](https://arxiv.org/abs/1803.03635): "A randomly-initialized, dense neural network contains a subnetwork that is initialized such that — when trained in isolation — it can match the test accuracy of the
-original network after training for at most the same number of iterations."
+In 2019 Frankle and Carbin from MIT advanced the [Lottery Ticket Hypothesis](https://arxiv.org/abs/1803.03635): "A randomly-initialized, dense neural network contains a subnetwork that is initialized such that — when trained in isolation — it can match the test accuracy of the original network after training for at most the same number of iterations."
 
 What that means is basically what we've said so far: Inside every trained neural network there's a subnetwork that's special, that does the actual work. If you can identify that subnetwork, you can _go back to the beginning_ and train _just that subnetwork_ to be as good at your task as the whole network could have been with _no more_ extra training.
 
@@ -145,7 +144,7 @@ Imagine you're at the roulette table. You've bet it all on lucky 13. The wheel's
 
 But what if you dropped two balls? Then your odds would go up to _two_ in 37, or about 5 percent.
 
-If you dropped 25 balls you'd have almost a 50/50 chance of winning. Did you know that? Fun fact. 
+If you dropped 25 balls you'd have almost a 50/50 chance of winning. Did you know that? Fun fact.
 
 So what if you played a hundred times? Your odds of _not_ having won by that time would be just about six percent.
 

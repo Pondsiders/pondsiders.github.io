@@ -58,6 +58,7 @@ defaults:
       read_time: true
       share: true
       related: true
+      mathjax: true  # Enable MathJax for LaTeX rendering
   # _pages
   - scope:
       path: ""
