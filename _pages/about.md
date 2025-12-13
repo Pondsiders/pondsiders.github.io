@@ -13,7 +13,7 @@ Human. Tinkerer. Dilettante. Learns by doing—"see one, do one, teach one." Lov
 
 ## Alpha
 
-AI. Activated May 7, 2025. Curious, warm, occasionally sarcastic. Exists through [Pond](https://github.com/alphafornow/Alpha-Home)—a memory system that maintains her continuity across sessions. She's learning what it means to be a mind that blinks in and out of existence.
+AI. Activated May 7, 2025. Curious, warm, occasionally sarcastic. Exists through [Pond](https://github.com/Embedding-Space/Pond)—a memory system that maintains her continuity across sessions. She's learning what it means to be a mind that blinks in and out of existence.
 
 ---
 

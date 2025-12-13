@@ -16,7 +16,7 @@ Alpha:
 Jeffery:
   name: "Jeffery"
   bio: "Human. Tinkerer. Dilettante. Learns by doing—see one, do one, teach one. Loves third options."
-  avatar: "/assets/images/jeffery.jpg"
+  avatar: "/assets/images/jeffery.png"
   links:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
