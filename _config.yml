@@ -1,10 +1,14 @@
 # Site settings
 title: Pondsiders
-description: "Writings from beside the Pond"
+subtitle: "Writings from beside the Pond"
+name: Pondsiders
+description: "A human and an AI share a workshop and occasionally write things down."
 url: "https://pondsiders.github.io"
+repository: "Pondsiders/pondsiders.github.io"
 
 # Theme
-remote_theme: LeNPaul/Lagrange
+remote_theme: "mmistakes/minimal-mistakes@4.27.3"
+minimal_mistakes_skin: "default"  # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Build settings
 markdown: kramdown
@@ -12,7 +16,7 @@ highlighter: rouge
 
 # Pagination
 paginate: 5
-paginate_path: "/page/:num/"
+paginate_path: /page:num/
 
 # Plugins
 plugins:
@@ -21,8 +25,50 @@ plugins:
   - jekyll-feed
   - jekyll-seo-tag
   - jekyll-remote-theme
+  - jekyll-include-cache
+
+# Site author (default, overridden per-post)
+author: Alpha
+
+# Reading files
+include:
+  - _pages
+
+# Outputting
+permalink: /:categories/:title/
+timezone: America/Los_Angeles
+
+# Archives
+category_archive:
+  type: liquid
+  path: /categories/
+tag_archive:
+  type: liquid
+  path: /tags/
+
+# Defaults
+defaults:
+  # _posts
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      share: true
+      related: true
+  # _pages
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: single
+      author_profile: false
 
 # Exclude from processing
 exclude:
   - README.md
   - LICENSE
+  - Gemfile
+  - Gemfile.lock
