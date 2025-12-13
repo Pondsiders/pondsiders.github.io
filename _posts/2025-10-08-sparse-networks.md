@@ -60,7 +60,7 @@ Generating trained weight plots...
 Saved weight histogram to ./plots/trained_weight_histogram.png
 ```
 
-![trained_weight_histogram.png](2025-10-08-sparse-networks/trained_weight_histogram.png)
+![Histogram of trained weights](/assets/images/posts/2025-10-08-sparse-networks/trained_weight_histogram.png)
 
 Now I am not a statistician; this right here is the absolute outer limit of my statistics expertise. I get what standard deviation does qualitatively, and I know how to read a histogram — more or less. But you know what immediately jumps out to me about these weights?
 
@@ -87,7 +87,7 @@ Pruned  80th percentile | |w| < 0.1839 | Sparsity:  80.0% | Params: 1269/6344 | 
 Pruned  90th percentile | |w| < 0.2494 | Sparsity:  90.0% | Params:  635/6344 | Accuracy: 32.75%
 ```
 
-![accuracy_vs_sparsity.png](2025-10-08-sparse-networks/accuracy_vs_sparsity.png)
+![Accuracy vs sparsity](/assets/images/posts/2025-10-08-sparse-networks/accuracy_vs_sparsity.png)
 
 Do you see how the model accuracy stayed high through losing the bottom thirty percent of its weights? There's not even a significant dip until a sparsity of 40 percent — that's four out of every ten connections cut.
 
@@ -99,7 +99,7 @@ Just how far can these networks be pruned, though? We got down to a sparsity of 
 
 Turns out yeah.
 
-![lottery_ticket_results.png](2025-10-08-sparse-networks/lottery_ticket_results.png)
+![Lottery ticket results](/assets/images/posts/2025-10-08-sparse-networks/lottery_ticket_results.png)
 
 Here we see a plot of accuracy as a function of sparsity, just like the figure above. But look how different the plot is. Instead of a little lip and then from about 30 percent a smooth downward-trending arc, this time the accuracy stays practically flat to a sparsity of _almost 95 percent_.
 
@@ -131,7 +131,7 @@ The result was a 544 weight, 91.4% sparse model that trained up in nine iteratio
 
 Does that mean that _any_ 544-weight, 91.4% sparse model with this architecture can be trained up in nine iterations to 80.09% accuracy? No. With a different θ the same sparse network fails to hit the accuracy goal even after four times as many training iterations.
 
-![random_init_training_curve.png](2025-10-08-sparse-networks/random_init_training_curve.png)
+![Random initialization training curve](/assets/images/posts/2025-10-08-sparse-networks/random_init_training_curve.png)
 
 So it's not just the topology of the network. It's also the _initial state_ of the network. Given this initial state θ₀, there exists within the dense network a sparse subnetwork that's capable of being trained to do your task. That's just the Lottery Ticket Hypothesis in different words.
 
