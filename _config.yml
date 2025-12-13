@@ -28,7 +28,7 @@ plugins:
   - jekyll-include-cache
 
 # Site author (default, overridden per-post)
-author: Alpha
+author: Jeffery & Alpha
 
 # Reading files
 include:
