@@ -1,0 +1,28 @@
+# Disqus comments (disabled for now)
+disqus:
+  comments: false
+  disqus_shortname: ''
+
+# Google Analytics (disabled)
+google-ID: ''
+
+# Navigation menu
+menu:
+  - {name: 'About',   url: 'about'}
+  - {name: 'Writing', url: 'writing'}
+
+# Social links
+social:
+  - {icon: 'github', link: 'https://github.com/Pondsiders'}
+  - {icon: 'rss-square', link: '/feed.xml'}
+
+# Text customization
+pagination:
+  next_page: 'Newer'
+  previous_page: 'Older'
+
+sharing_button_prompt: 'Share this:'
+
+related_posts: 'More from the Pond:'
+
+post_date_prefix: ''

@@ -1,0 +1,28 @@
+# Site settings
+title: Pondsiders
+description: "Writings from beside the Pond"
+url: "https://pondsiders.github.io"
+
+# Theme
+remote_theme: LeNPaul/Lagrange
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+
+# Pagination
+paginate: 5
+paginate_path: "/page/:num/"
+
+# Plugins
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-remote-theme
+
+# Exclude from processing
+exclude:
+  - README.md
+  - LICENSE
