@@ -1,6 +1,6 @@
 ---
 title: "An Exploration of Reading Level Steerability"
-author: Jeffery
+author: Jeffery & Alpha
 date: 2025-11-21
 categories:
   - Workshop

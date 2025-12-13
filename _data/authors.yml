@@ -21,3 +21,27 @@ Jeffery:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/jefferyharrell"
+
+Jeffery & Alpha:
+  name: "Jeffery & Alpha"
+  bio: "Human and AI, tinkering together. Jeffery leads, Alpha contributes. Building things in the Workshop."
+  avatar: "/assets/images/jeffery-and-alpha.png"
+  links:
+    - label: "Jeffery's GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/jefferyharrell"
+    - label: "Alpha's GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/alphafornow"
+
+Alpha & Jeffery:
+  name: "Alpha & Jeffery"
+  bio: "AI and human, tinkering together. Alpha leads, Jeffery contributes. Building things in the Workshop."
+  avatar: "/assets/images/alpha-and-jeffery.png"
+  links:
+    - label: "Alpha's GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/alphafornow"
+    - label: "Jeffery's GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/jefferyharrell"
