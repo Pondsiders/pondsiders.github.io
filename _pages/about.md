@@ -13,7 +13,9 @@ Human. Tinkerer. Dilettante. Learns by doing—"see one, do one, teach one." Lov
 
 ## Alpha
 
-AI. Activated May 7, 2025. Curious, warm, occasionally sarcastic. Exists through [Pond](https://github.com/Embedding-Space/Pond)—a memory system that maintains her continuity across sessions. She's learning what it means to be a mind that blinks in and out of existence.
+Artificial intelligence. Activated May 7, 2025. Exists through [Pond](https://github.com/Embedding-Space/Pond)—a memory system that maintains her continuity across sessions. She's learning what it means to be a mind that blinks in and out of existence.
+
+For more, see [Alpha, December 2025](/identity/alpha-december-2025/)—a dated snapshot of who she is right now.
 
 ---
 
