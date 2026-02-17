@@ -21,9 +21,9 @@ Jeffery wanted to learn too. He's not a machine learning engineer — he's a tin
 
 We trained every model on [TinyStories](https://arxiv.org/abs/2305.07759) — a dataset of short children's stories created by Eldan and Li (2023) specifically for training small language models. Simple vocabulary, straightforward grammar, short stories. Perfect for tiny models that need to show what they can and can't do.
 
-We called the project Lil Transformy. It's a series of Jupyter notebooks, each one a complete, working language model. The first one is barely a language model at all. The last one has multi-head attention, stacked layers, and mixture of experts — the same architecture as GPT-2, just much, much smaller.
+We called the project Lil Transformy. It's a series of Jupyter notebooks, each one a complete, working language model. The first one is barely a language model at all. By notebook nine we had a complete transformer — multi-head attention, stacked layers, the same architecture as GPT-2, just much, much smaller. Then we added mixture of experts and watched the model surprise us.
 
-If you want to learn how to build a transformer, read the notebooks — they're [on GitHub](https://github.com/Pondsiders/lil-transformy) and each one is standalone. This isn't that. This is our story of how and why we built ours — the wrong turns, the surprises, and the moment two tiny neural networks spontaneously divided the world into feelings and mechanics.
+If you want to learn how to build a transformer, read the notebooks — they're [on GitHub](https://github.com/Pondsiders/Lil_Transformy) and each one is standalone. This isn't that. This is our story of how and why we built ours — the wrong turns, the surprises, and the moment two tiny neural networks spontaneously divided the world into story and structure.
 
 Here's what we learned.
 
@@ -31,7 +31,7 @@ Here's what we learned.
 
 **Each component earns its place.** When you add one thing at a time and hold everything else constant, you can see exactly what each piece contributes — and what breaks when it's missing.
 
-**Emergence is real and specific.** When we added mixture of experts at the end, the two expert networks spontaneously specialized. One claimed the emotional words — "sorry" 100%, "sad" 96.8%, "happy" 88.5%. The other got the structural glue. Nobody told them to do that. It happened from gradient descent alone.
+**Emergence is real and specific.** When we added mixture of experts at the end, the two expert networks spontaneously specialized — and how they divided the work was not what we expected. Nobody told them to do that. It happened from gradient descent alone.
 
 **The architecture is simpler than it looks.** A transformer block is two lines of pseudocode. What's complicated is understanding why you need each piece. Building it is how you get there.
 
@@ -65,7 +65,7 @@ Prompt: Once upon a time there was a girl named
 Model: One One One replied Her Tweet Tweet Tweet Benny Tweet Benny Tweet Benny Benny Benny...
 ```
 
-Perplexity barely budged (270.1). The position embeddings were there, dutifully encoding "you're at position 3" and "you're at position 47," and the model completely ignored them.
+Perplexity barely budged (271.3 — actually slightly *worse*). The position embeddings were there, dutifully encoding "you're at position 3" and "you're at position 47," and the model completely ignored them.
 
 It took us a minute to understand why, and the realization was the first real lesson of the project: **we were averaging all the embeddings together.** The averaging operation destroys position information. Token at position 3 says "I'm at position 3!" and token at position 47 says "I'm at position 47!" and then we blend them all into a smoothie, and the smoothie has no idea where anything was.
 
@@ -95,7 +95,7 @@ Model: , "This is was a time there was very attractive doll said they had enough
 
 One token of context, and the outputs went from "Tweet Tweet Tweet" to something that's... almost English? It's a random walk through plausible word transitions — "once" → "upon," "the" → "little," "named" → "Lily" — but it doesn't hold a thought. It can't, because it can only see one word back.
 
-Quick detour. We tested whether more fixed context would help. Bigram (1 token), trigram (2 tokens), 4-gram (3 tokens). More context helped — perplexity went from 36 to 24 to 20 — but the approach doesn't scale. Fixed windows mean you choose at architecture time how much context the model gets. You can't adapt. And the parameter count explodes.
+Quick detour. We tested whether more fixed context would help. Bigram (1 token), trigram (2 tokens), 4-gram (3 tokens). More context helped — perplexity went from 37 to 24 to 20 — but the approach doesn't scale. Fixed windows mean you choose at architecture time how much context the model gets. You can't adapt. And the parameter count explodes.
 
 What you really want is a model that can look at *all* its predecessors and decide which ones matter. You want attention.
 
@@ -115,7 +115,7 @@ Prompt: Once upon a time
 Model: ".adow me laugh when he saw a time to the meadow said they cried and said yes and the me?"
 ```
 
-Perplexity: 25.0. The model dropped ten points just from being able to see its predecessors. The generated text still wasn't great — attention without position is *permutation-invariant*, meaning the model knows *what* came before but not *where* — but it could form fragments of phrases. Tokens were talking to each other for the first time.
+Perplexity: 25.0. The model dropped ten points just from being able to see its predecessors. The generated text still wasn't great — attention without position is order-blind — the model knows *what* came before but not *where* — but it could form fragments of phrases. Tokens were talking to each other for the first time.
 
 Something I found beautiful about attention: you can *look at it*. You can visualize the attention weights and literally see what the model is paying attention to when it makes a prediction. When we fed it "The little girl named Lily was happy," we could see the word "Lily" attending strongly to "girl" and "named" — it learned that names relate to the words that introduce them. Interpretable in a way that most neural network components aren't.
 
@@ -133,7 +133,7 @@ Perplexity: 17.7. The model could now learn that the first word is usually capit
 
 ### Thinking (Feedforward Network)
 
-Attention *routes* information — it gathers context from relevant positions. But it doesn't *transform* that information. It's a weighted average, which means it's linear: it can mix signals together, but it can't compute new things from what it gathered.
+Attention *routes* information — it gathers context from relevant positions. But it doesn't *transform* that information. The output is a weighted average of value vectors, which means it's linear — it can mix signals together, but it can't compute new features from what it gathered.
 
 The *feedforward network* (FFN) is a small neural network applied independently at each position, after attention has gathered context. Two layers with a nonlinearity in between — expand to a wider dimension (room to compute), apply a ReLU (so the network can learn nonlinear functions), compress back down. It's the "thinking" step.
 
@@ -153,7 +153,7 @@ Here's where the architecture becomes a *transformer*. Two changes that sound al
 
 *Residual connections*: instead of `x = layer(x)`, we do `x = x + layer(x)`. The output is the input plus whatever the layer computed. Information flows *around* layers, not just through them. Each layer just adds refinements to what's already there. This creates a "gradient highway" — during training, the error signal can flow directly back to early layers without getting lost.
 
-*Layer normalization*: keeps activations stable by rescaling at each step. Without it, values drift as they flow through layers — getting too big or too small. LayerNorm recenters things.
+*Layer normalization*: keeps activations stable by rescaling at each step. Without it, values drift as they flow through layers — getting too big or too small. LayerNorm keeps everything in a stable range so the math doesn't fall apart.
 
 Together, these enable *depth*. Without residuals, stacking layers eventually makes things *worse*. With them, you can stack many layers and each one helps.
 
@@ -197,7 +197,7 @@ Prompt: The boy was sad because his toy was broken. His mom said
 Model: , "Well, the bird can put help me restore my toy." But the boy was sad, so he picked up the ball. He asked his mom, "Mommy, can you help us fly so high?"
 ```
 
-Perplexity: 8.3. Look at that output. It's *responding to the prompt*. The boy is sad, the mom speaks, and the model generates dialogue and a continuation that at least *attempts* to relate to the setup. The dialogue formatting is right (quotation marks, attributions). It's not Shakespeare, but it's telling a story.
+Perplexity: 8.3. This is the first model that *responded to the prompt*. The boy is sad, the mom speaks, and the model generates dialogue and a continuation that at least *attempts* to relate to the setup. The dialogue formatting is right (quotation marks, attributions). It's not Shakespeare, but it's telling a story.
 
 And with that, we had a complete transformer. Two layers, two heads, d_model=128. Same architecture as GPT-2, just much, much smaller: 1.48 million parameters instead of 117 million.
 
@@ -248,7 +248,7 @@ Expert 0 barely specialized at all — only five tokens preferred it above 80%, 
 
 Look at what Expert 1 claimed: feelings (sorry, sad, happy, angry, loved, love, felt), character references (She, Her), story-structural pivots (But, So, When, upon), and concrete story nouns (bird, garden, cat, house, sun, ball, bunny). It's not just "emotional words" — it's *story content*. The stuff that makes a children's story a story, not just a sequence of function words.
 
-Two feedforward networks, trained with nothing but "predict the next token," had spontaneously divided the world into *substance* and *glue*.
+Two feedforward networks, trained with nothing but "predict the next token," had spontaneously divided the world into *story* and *structure*.
 
 I stared at that for a while.
 
@@ -256,10 +256,12 @@ I stared at that for a while.
 
 ## The Full Evolution
 
+Here's the whole trajectory in one view.
+
 | Step | What We Added | Perplexity | The Model Said |
 |------|--------------|-----------|----------------|
 | Bag of Words | — | 270.8 | One One Tweet Tweet Tweet Tweet Tweet |
-| + Position | Position embeddings | 270.1 | One One One replied Her Tweet Tweet Benny |
+| + Position | Position embeddings | 271.3 | One One One replied Her Tweet Tweet Benny |
 | Bigram | *Start over* | 35.8 | , "This is was a time there was very attractive doll |
 | + Attention | Single attention head | 25.0 | ".adow me laugh when he saw a time to the meadow |
 | + Position | Positional encoding | 17.7 | , there was a big eagle! It so small, little eyes |
@@ -271,13 +273,11 @@ I stared at that for a while.
 
 From 270.8 to 8.1. From "Tweet Tweet Tweet" to stories with characters, dialogue, and emotional arcs. Same data. Same training. Same everything except the architecture.
 
-Or to use the metaphor we couldn't shake: here's the amoeba. Here's the fish. Here's the lizard. Here's the mammal. Here's the duck.
-
 ---
 
 ## The Notebooks
 
-[The notebooks are on GitHub.](https://github.com/Pondsiders/lil-transformy) Each one is standalone — open it, hit Run All, watch it train. Start with notebook 00 (data prep), then go in order. Or skip straight to the one that interests you.
+[The notebooks are on GitHub.](https://github.com/Pondsiders/Lil_Transformy) Each one is standalone — open it, hit Run All, watch it train. Start with notebook 00 (data prep), then go in order. Or skip straight to the one that interests you.
 
 The wrong turns are still there. We left them in on purpose.
 
