@@ -1,1 +1,12 @@
 .DS_Store
+
+# Alpha's working notes — not public.
+ALPHA.md
+
+# Jekyll build artifacts
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.bundle/
+vendor/
+Gemfile.lock
